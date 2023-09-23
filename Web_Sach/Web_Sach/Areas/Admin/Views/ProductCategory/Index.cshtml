@@ -1,0 +1,148 @@
+﻿@model PagedList.IPagedList<Web_Sach.Models.DanhMucSP>
+@using PagedList.Mvc;
+@using System.Web.Mvc.Ajax;
+
+@{
+    ViewBag.Title = "Danh mục sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@section ProductCategory{
+
+    <h2 style="text-align:center">QUẢN LÝ DANH MỤC SẢN PHẨM</h2>
+
+}
+
+<div class="card mb-4">
+    <div class="card-header   ">
+
+        @using (Html.BeginForm("Index", "ProductCategory", FormMethod.Get))
+        {
+            <div class="row justify-content-sm-end">
+
+                <div class="col-sm-2 ">
+                    <input type="text" value="@ViewBag.SearchString" name="searchString" />
+
+                </div>
+                <div class="col-sm-2 ">
+                    <button type="submit">Tìm kiếm</button>
+
+                </div>
+
+            </div>
+        }
+
+
+
+
+
+    </div>
+
+
+
+
+    <div class="card-body">
+        <div class="container-fluid">
+            <a href="~/Admin/ProductCategory/Create">Thêm mới</a>
+            <table class="table table-bordered"  style="text-align:center">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tên danh mục</th>
+                        <th>Meta Title</th>
+                        <th>Trạng thái</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.ID">
+                            <td>
+                                <a href="/Admin/ProductCategory/Update/@item.ID" style="text-decoration:none ;color:forestgreen">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    Sửa
+                                </a>
+
+
+
+
+                                <span style="text-decoration:none ;color:red">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                    @Ajax.ActionLink("Xóa", "Delete", new { @id = @item.ID }, new AjaxOptions
+                               {
+                                   Confirm = "Bạn có muốn xóa bản ghi này!!",
+                                   OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                  
+                                   HttpMethod = "Delete"
+
+                               },
+                               new
+                               {
+                                   @class = "btn text-danger p-0"
+                              }
+                               )
+                                </span>
+
+
+
+
+
+
+
+                            </td>
+                            <td>@item.Name</td>
+                            <td>@item.MetaTitle</td>
+
+                            @if (item.Status)
+                            {
+                                <td><a href="#" style="text-decoration:none" class="btn-active btn-start-text text-success " data-id="@item.ID">@(item.Status ? "Kích hoạt" :"Khóa")</a></td>
+
+
+                            }
+                            else
+                            {
+                                <td><a href="#" style="text-decoration:none" class="btn-active btn-block-text text-danger " data-id="@item.ID">@(item.Status ? "Kích hoạt" :"Khóa")</a></td>
+
+                            }
+
+                        </tr>
+                    }
+
+
+
+                </tbody>
+
+            </table>
+
+
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @ViewBag.SearchString }))
+            @* get trang mới *@
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    function changeLinkColor() {
+
+        // Thay đổi màu sắc của liên kết sau khi xóa thành công
+        $("a:contains('Xóa')").css("color", "red"); // Thay đổi màu sắc thành màu xanh
+
+    }
+</script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@section jsFooter{
+    <script src="~/Scripts/Admin/Controller/productCategoryController.js"></script>
+}

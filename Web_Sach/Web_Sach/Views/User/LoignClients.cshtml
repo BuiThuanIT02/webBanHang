@@ -1,0 +1,192 @@
+﻿@model Web_Sach.Models.EF.UserLoginClients
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Bootrap</title>
+
+    <link href="/Scripts/Client/bootrap_login.css" rel="stylesheet" />
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!--background-->
+    <section id="background">
+    </section>
+
+    <!-- End background-->
+    <!--Home-->
+    <section id="home">
+        <div class="content container ">
+
+
+            <div class="content-row row ">
+                <div class="content-row-column-left col-sm-7 col-md-7 d-flex flex-column justify-content-center align-items-center ">
+                    <div class="content-text">
+                        <h2 class="text-white text-center">Welcome</h2>
+                        <h3 class="text-white text-center">To Our New Website</h3>
+                        <p class="text-white text-center">
+                            Loren ipsim , dollor sit amen
+                            con adipisicing elit.Beaatea, asperriores
+                        </p>
+                    </div>
+
+                    <div class="content-icon">
+                        <i class="fa-brands fa-instagram fs-3 me-2 text-danger"></i>
+                        <i class="fa-brands fa-facebook fs-3 me-2 text-info"></i>
+                        <i class="fa-brands fa-twitter fs-3 me-2 text-info"></i>
+                        <i class="fa-brands fa-github fs-3 me-2"></i>
+                    </div>
+
+
+                </div>
+
+                <div class="content-row-column-right col-sm-5 col-md-5 d-flex flex-column justify-content-center  ">
+                    <h2 class="text-white text-center">Login</h2>
+                    @using (Html.BeginForm("LoignClients", "User",FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                <div class="form-horizontal ">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group text-white  ">
+                        <label></label>
+                        <div class="col-md-10  w-100">
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @type = "text", @placeholder = "Tài khoản" })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label></label>
+                        <div class="form-group position-relative">
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control", @type = "password", @placeholder = "Password", @name = "password", @id = "password" })
+                            @*<input type="password" name="password" id="password" class="form-control" placeholder="Password">*@
+                            <i class="fa-regular fa-eye-slash position-absolute end-0 bottom-0 translate-middle toggle-password"></i>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group d-flex justify-content-between">
+
+                        <div class="form-group text-white">
+                          
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.Remeber, new { @class = "control-label col-md-2"})
+                                <div class="checkbox">
+
+                                    @Html.EditorFor(model => model.Remeber)
+                                    @Html.ValidationMessageFor(model => model.Remeber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="form-check">
+                            <input type="checkbox" class="form-check-input">
+                            <label for="" class="text-white">Remember</label>
+
+                        </div>*@
+
+                        <div class="forgot-pasword ">
+                            <a href="#" class=" link-underline link-underline-opacity-0">Forgot password</a>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="login mt-3">
+                        <button class="btn text-bg-info w-100">Login</button>
+
+                    </div>
+
+                    <div class="sign-up d-flex  justify-content-center mt-2">
+                        <p class="text-white">Don't have an account?</p>
+                        <a href="/dang-ky" class="link-underline ">Sign up</a>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                    
+
+
+
+
+
+
+
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+                    }
+
+
+
+                   
+
+
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </section>
+    <!-- End Home-->
+    <script>
+        $(document).ready(function() {
+            $(".toggle-password").click(function() {
+                var passwordField = $("#password");
+                var icon = $(this);
+
+                if (passwordField.attr("type") === "password") {
+                    passwordField.attr("type", "text");
+                    icon.removeClass("fa-eye-slash").addClass("fa-eye");
+                } else {
+                    passwordField.attr("type", "password");
+                    icon.removeClass("fa-eye").addClass("fa-eye-slash");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

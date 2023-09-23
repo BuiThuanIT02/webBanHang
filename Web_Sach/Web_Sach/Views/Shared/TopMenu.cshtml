@@ -1,0 +1,26 @@
+﻿<div class="col-md-9">
+    @{
+        var session = (Web_Sach.Session.UserLoginSession)Session[Web_Sach.Session.SessionHelper.USER_KEY];
+    }
+    @if (session == null)
+    {
+    <ul style="list-style:none" >
+        <li > <a  href="/dang-nhap">Đăng nhập</a></li>
+      
+        <li > <a  href="/dang-ky">Đăng ký</a></li>
+
+    </ul>
+           
+        @*<button class="btn text-danger p-0">Đăng nhập</button>*@
+    }
+            else
+            {
+                  <ul style="list-style:none">
+                       <li  >Xin chào: @session.UserName</li>
+                       <li  >@Html.ActionLink("Đăng xuất","Logout","User")</li>
+                   </ul>
+
+            }
+    
+
+</div>

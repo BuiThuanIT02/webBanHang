@@ -1,0 +1,55 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two&family=Sawarabi+Gothic&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Sawarabi Gothic', sans-serif;
+}
+
+#background {
+    background-image: url('../../Data/Images/vutru.png');
+   /* background-image: url('./Data/Images/vutru.png');*/
+    width: 100%;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    filter: blur(5px);
+}
+
+#home {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 75%;
+    height: 75%;
+    background-image: url('../../Data/Images/vutru.png');
+   
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px;
+    box-shadow: 5px 10px 25px 0; /* dài rộng mờ rộng mờ*/
+}
+
+
+#home .content{
+ height: 100%;
+ 
+}
+#home .content .content-row{
+  
+    height: inherit;
+}
+
+#home .content .content-row-column-right{
+   
+    
+  
+}
+#home .content-row-column-right .form-input{
+    border:none;
+}

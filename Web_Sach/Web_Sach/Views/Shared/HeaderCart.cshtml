@@ -1,0 +1,25 @@
+﻿@model List<Web_Sach.Models.EF.CartItem>
+@{ 
+    var sessionUser = Session["USER_KEY"];
+}
+
+<div class="col">
+    <a href="/gio-hang" class="position-relative">
+        <span class="fs-3 text-dark">
+            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+        </span>
+        <span class="position-absolute top-0  start-100 translate-middle badge rounded-pill bg-danger">
+            @if (sessionUser == null)
+            {
+                <span>0</span>
+            }
+            else
+            {
+                @Model.Count
+            }
+            <span class="visually-hidden">unread messages</span>
+            <!--..-hidden : ẩn nội dung trước mắt-->
+        </span>
+    </a>
+
+</div>

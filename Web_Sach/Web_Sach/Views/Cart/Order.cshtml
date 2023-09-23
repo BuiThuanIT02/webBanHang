@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "Đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var order = (List<Web_Sach.Models.DonHang>)ViewBag.Order;
+
+}
+
+@section jsFooter{
+
+    <script src="~/Scripts/Client/Controller/RemoveOrder.js"></script>
+}
+
+<div class="wrap">
+    
+
+    <div class="container">
+        @if (order != null)
+        {
+            <div class="row justify-content-sm-end mb-3">
+                <a href="/Order/OrderSuccess" class="text-success w-25 text-center  " style="height:50px; line-height:50px">Đơn hàng giao thành công</a>
+               
+
+            </div>
+            <div id="order">
+                <div class="container">
+                    <table class="table table-bordered text-center">
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Ngày đặt</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Hủy đơn hàng</th>
+                            <th>Thông tin</th>
+                            <th>#</th>
+
+                        </tr>
+                        @foreach (var item in order)
+                        {
+                            <tr id="orderRow_@item.ID">
+                                <td>@item.ID</td>
+                                <td>@item.NgayDat</td>
+                                <td>@(item.TongTien.HasValue ? item.TongTien.Value.ToString("N0") :"")</td>
+                                @if (item.Status == 1)
+                                {
+                                    <td class="text-danger">Đang chờ xử lý</td>
+                                }
+                                else if (item.Status == 2)
+                                {
+                                    <td class="text-warning">Đang vận chuyển</td>
+                                }
+
+                                <td>
+                                    <a href="#" data-order-id="@item.ID" class="text-danger text-decoration-none moveOrder">
+
+                                        Hủy
+                                    </a>
+                                </td>
+                                @if (item.Status == 1)
+                                {
+                                    <td class="text-info">Đã nhận được hàng</td>
+                                }
+                                else if (item.Status == 2)
+                                {
+                                    <td>
+                                        <a href="#" class=" text-decoration-none getOrer" data-order-id="@item.ID">Đã nhận được hàng</a>
+                                    </td>
+                                }
+
+
+
+                                <td>
+                                    <a href="~/Cart/OrderDetail/@item.ID">Xem chi tiết</a>
+
+                                </td>
+
+
+
+                            </tr>
+
+                        }
+
+                    </table>
+                </div>
+
+
+
+
+
+
+
+            </div>
+        }
+        else
+        {
+            <p class="text-bg-danger">Đơn hàng trống</p>
+        }
+
+    </div>
+
+
+
+
+</div>
+
+

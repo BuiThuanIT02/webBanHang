@@ -1,0 +1,76 @@
+﻿@model List<Web_Sach.Models.DonHang>
+@{
+    ViewBag.Title = "Đơn hàng giao thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var count = Model.Count();
+}
+
+<div class="wrap">
+
+
+    <div class="container">
+        @if (count >0)
+        {
+           
+            <div id="order">
+                <div class="container">
+                    <table class="table table-bordered text-center">
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Ngày đặt</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            
+                            <th>Thông tin</th>
+                           
+
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ID</td>
+                                <td>@item.NgayDat</td>
+                                <td>@(item.TongTien.HasValue ? item.TongTien.Value.ToString("N0") :"")</td>
+                                @if (item.Status == 3)
+                                {
+                                    <td class="text-success">Đã nhận được hàng</td>
+                                }
+                                
+
+                               
+
+
+                                <td>
+                                    <a href="~/Cart/OrderDetail/@item.ID">Xem chi tiết</a>
+
+                                </td>
+
+
+
+                            </tr>
+
+                        }
+
+                    </table>
+                </div>
+
+
+
+
+
+
+
+            </div>
+        }
+        else
+        {
+            <p class="text-bg-danger">Đơn hàng trống</p>
+        }
+
+    </div>
+
+
+
+
+</div>
+

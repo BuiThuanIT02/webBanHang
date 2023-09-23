@@ -1,0 +1,134 @@
+﻿@model PagedList.IPagedList<Web_Sach.Models.DonHang>
+@using PagedList.Mvc
+
+@using System.Web.Mvc.Ajax
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h2>Quản lý đơn hàng</h2>
+
+<div class="card mb-4">
+    @*<div class="card-header   ">
+        
+        @using (Html.BeginForm("Index", "User", FormMethod.Get))
+        {
+            <div class="row justify-content-sm-end">
+
+                <div class="col-sm-2 ">
+                    <input type="text" value="@ViewBag.SearchString" name="searchString" />
+
+                </div>
+                <div class="col-sm-2 ">
+                    <button type="submit">Tìm kiếm</button>
+
+                </div>
+
+            </div>
+        }
+
+
+
+
+
+    </div>*@
+
+
+
+
+    <div class="card-body">
+        <div class="container-fluid">
+           
+            <table class="table table-bordered" style="text-align:center">
+                <thead>
+                    <tr>
+                       
+                        <th>Mã đơn hàng</th>
+                        <th>Tên khách hàng</th>
+                        <th>Điện thoại</th>
+                        <th>Email</th>
+                        <th>Ngày đặt</th>
+
+                        <th>Địa chỉ</th>
+                        <th>Tổng tiền</th>
+                        <th>Tình trạng</th>
+                        <th>#</th>
+
+
+
+                    </tr>
+                </thead>
+
+                <tbody>
+
+
+                
+                    @foreach (var item in Model)
+                    {
+                    <tr id="row_@item.ID">
+                       
+
+
+
+
+                      
+                        <td>@item.ID</td>
+                        <td>@item.TenKH</td>
+                        <td>@item.Moblie</td>
+                        <td>@item.Email</td>
+                        <td>@(item.NgayDat.HasValue ? item.NgayDat.Value.ToString("yyyy-MM-dd") : "")</td>
+
+                        <td>@item.Address</td>
+                        <td>@(item.TongTien.HasValue ? item.TongTien.Value.ToString("N0") : "")</td>
+                        @if (item.Status == 1)
+                        {
+                            <td>
+                                <a href="~/Admin/Order/ChangeStatus/@item.ID" class="text-danger" >
+                                    Chờ xử lý
+                                </a>
+                            </td>
+                        }
+                        else if(item.Status ==2){
+                            <td>
+                                <p class="text-warning">Đang vận chuyển</p>
+                            </td>
+                            
+                        }
+
+
+
+
+                        <td>
+                            <a class="text-success" href="/Admin/Order/OrderDetail/@item.ID">Xem chi tiết</a>
+                        </td>
+
+
+                    </tr>
+                    }
+
+
+
+                </tbody>
+
+            </table>
+
+
+
+        
+             
+                       
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                     
+                
+           
+              
+                @* get trang mới *@
+
+
+        </div>
+
+
+    </div>
+
+</div>
+

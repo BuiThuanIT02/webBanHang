@@ -1,0 +1,159 @@
+﻿@model Web_Sach.Models.TacGia
+@{
+    ViewBag.Title = "Tác giả";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var sach = (List<Web_Sach.Models.Sach>)ViewBag.ListSach;
+}
+
+<div class="container">
+
+    <h2>@Model.TenTacGia</h2>
+    <div class="row">
+        @if (Model.TieuSu != null)
+        {
+            @Model.TieuSu
+        }
+    </div>
+    
+
+
+
+    @* tác phẩm cùng tác giả *@
+
+<div class="row">
+    <h5 class="text-dark text-left">Tác phẩm của @Model.TenTacGia</h5>
+
+
+
+
+
+
+    @foreach (var item in sach)
+    {
+        var priceSale = item.Price - (item.Price * item.Sale / 100);
+        <div class="col-md-3 product-item my-3 position-relative text-center">
+
+            <a href="/chi-tiet/@item.MetaTitle-@item.ID"><img src="@item.Image" class="img-fluid" alt="san_pham"> </a>
+            <span class=" position-absolute  badge translate-middle  bg-danger" style="top:19px; right: -10px;">-@item.Sale%</span>
+            <p class="fs-5 product-name multi-line">@item.Name</p>
+
+
+            <span class="text-dark me-4 ">@(priceSale.HasValue ? priceSale.Value.ToString("N0") :"")</span>
+            <span class="text-bg-danger">
+                <del>@((item.Price.HasValue ? item.Price.Value.ToString("N0") : ""))</del>
+            </span>
+
+
+        </div>
+
+    }
+
+
+   
+
+    <!--Phân trang -->
+
+    @if (ViewBag.totalRecord > 1)
+    { // số bản ghi  > kích thước mỗi trang
+        var pageMax = (int)ViewBag.maxPage;
+        var totalPage = (int)ViewBag.totalPage;
+        var currentPage = (int)ViewBag.page;
+        var starIndex = (int)Math.Max(1, currentPage - pageMax / 2);
+        var endIndex = (int)Math.Min(totalPage, currentPage + pageMax / 2);
+
+
+        var link = "/tac-gia/" +Model.ID ;
+        <nav>
+            <ul class="pagination justify-content-end mt-2 ">
+                <!--Nếu trang hiện tại > 1 thì xuất hiện << -->
+                @if (currentPage > ViewBag.First)
+                {
+                    <li class="page-item"><a href="@link?page=@ViewBag.Prev" class="previous page-link" title="Trang trước"> <span aria-hidden="true">&laquo;</span>  </a></li>
+                }
+
+
+
+                @for (int i = starIndex; i <= endIndex; i++)
+                {
+                    if (currentPage == i)
+                    {
+                        <li class="page-item"><a href="@link?page=@i" class="page-link active">@i</a></li>
+
+                    }
+                    else
+                    {
+                        <li class="page-item"><a href="@link?page=@i" class="page-link pos">@i</a></li>
+
+                    }
+
+
+                }
+
+
+                @if (currentPage < totalPage)
+                {
+                    <li class="page-item"><a href="@link?page=@ViewBag.Next" class="page-link next"> <span aria-hidden="true">&raquo;</span>    </a></li>
+
+                }
+
+
+            </ul>
+        </nav>
+
+
+
+
+
+    }
+
+    
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<

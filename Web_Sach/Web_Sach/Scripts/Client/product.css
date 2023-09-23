@@ -1,0 +1,32 @@
+
+
+.product-info #buy-amount{
+    display: flex;
+    justify-content: flex-start;
+ 
+ }
+ button.minus-btn ,
+ button.plus-btn
+ {
+     border:  1px solid #ccc;
+     outline: none;
+   
+    background: none;
+    cursor: pointer;
+    color:gray;
+ }
+ button:hover{
+     background-color: #ccc;
+     transition: all ease-out 0.5s;
+ }
+ button:hover i{
+     color:black;
+     transition:  all ease-out 0.5s;
+ }
+ button svg{
+     background-color: #909090;
+ }
+ input[name="amount"]{
+     width: 200px;
+     text-align: center;
+ }

@@ -1,0 +1,112 @@
+﻿@model List<Web_Sach.Models.EF.CartItem>
+@{
+    ViewBag.Title = "Thanh toan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    double total = 0;
+    var userPayment = (Web_Sach.Session.UserLoginSession)ViewBag.User;
+}
+
+
+
+<div class=" d-block my-5 p-0">
+    @if (Model.Count > 0)
+    {
+    <table class="table table-bordered w-100 table-striped ">
+        <tr class="text-center">
+   
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Ảnh sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+            <th>Thành tiền</th>
+           
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+         
+            var price = item.sach.Price - (item.sach.Price * (decimal)item.sach.Sale / 100);
+            total += Convert.ToInt32(item.Quantity * price);
+
+
+            <tr class="text-center " style="vertical-align: middle;">
+               
+                <td class="p-0">@item.sach.ID</td>
+                <td>@item.sach.Name</td>
+                <td>
+                    <img src="@item.sach.Image" width="100px" />
+                </td>
+                <td>
+                    <span>@item.Quantity</span>
+                </td>
+                <td>@price.GetValueOrDefault(0).ToString("N0")</td>
+                <td>@((item.Quantity * price.GetValueOrDefault(0)).ToString("N0"))</td>
+
+            </tr>
+
+
+
+        }
+        <tr>
+            <th colspan="6" style="text-align:right " class="text-dark fs-5 ">Tổng tiền:@total.ToString("N0")</th>
+        </tr>
+
+
+
+
+
+
+
+    </table>
+
+       
+   
+    }
+   
+
+</div>
+
+
+<div class="section group mb-5">
+    <h4 class="text-center">Xác nhận thanh toán</h4>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-6">
+                @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+                {
+                    <div class="form-group mb-2">
+                        <label>Người nhận</label>
+                        <input type="text" name="TenKH" class="form-control" value="@userPayment.FullName" required/>
+                       
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Điện thoại</label>
+                        <input type="tel" pattern = "[0-9]{3} [0-9]{3} [0-9]{4}" placeholder = "035 456 9871" name="Mobile" class="form-control" value="@userPayment.Phone" required/>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Địa chỉ</label>
+                        <input type="text" name="Address" class="form-control" required />
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Email</label>
+                        <input type="email" name="Email" class="form-control" value="@userPayment.Email"  required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="total" value="@total" />
+
+                    </div>
+                    <button type="submit" class="btn btn-dark" >Thanh toán</button>
+                }
+
+            </div>
+        </div>
+     
+    </div>
+
+   
+</div>

@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var orderDetail = (List<Web_Sach.Models.EF.OrderDetail>)ViewBag.OrderDetail;
+    double totalAll = 0;
+}
+
+<div id="orderDetail">
+    <div class="container">
+        <table class="table table-bordered text-center">
+            <tr>
+                <th>Mã sách</th>
+                <th>Tên sách</th>
+                <th>Đơn giá</th>
+                <th>Số lượng</th>
+
+                <th>Thành tiền</th>
+            </tr>
+            @foreach (var item in orderDetail)
+            {
+                var price = item.PriceBuy - item.PriceBuy * item.Sale / 100;
+                var totalItem = price * item.QuantityBuy;
+                
+                totalAll += totalItem;
+
+                <tr>
+                    <td>@item.sachId</td>
+                    <td>@item.sachName</td>
+                    <td>@price.ToString("N0")</td>
+
+                    <td>
+                        @item.QuantityBuy
+                    </td>
+                    <td>@totalItem.ToString("N0")</td>
+
+                </tr>
+
+            }
+
+            <tr>
+                <th colspan="5" style="text-align:right; " class="fs-5">
+                   Tổng:  @totalAll.ToString("N0")
+                </th>
+            </tr>
+
+
+        </table>
+    </div>
+
+
+
+
+
+
+
+</div>
+

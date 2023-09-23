@@ -1,0 +1,133 @@
+﻿@model List<Web_Sach.Models.Silde>
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listProductNew = (List<Web_Sach.Models.Sach>)ViewBag.listProductNew;
+    var listProductTopHot = (List<Web_Sach.Models.Sach>)ViewBag.listProductTopHot;
+
+}
+@section slide{
+    
+    <div class="slider">
+
+
+        <div class="container">
+            <div class="row slick-slider">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-12">
+                        <img src="@item.Image" class="img-fluid rounded" alt="">
+                    </div>
+
+                }
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+  }
+@section product{
+
+    <div class="mt-3" id="product">
+
+        <div class="container">
+
+            <!--Title product-->
+            <div class="product-title border-bottom">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <h3 class="text-center mt-5">SÁCH MỚI</h3>
+
+                    </div>
+                </div>
+
+            </div>
+            <!--Product list sách mới-->
+
+            <div class="row slick-productNew">
+
+                @foreach (var item in listProductNew)
+                {
+                    var priceSale = item.Price - (item.Price * item.Sale / 100);
+                <div class="col-md-12 product-item my-3 position-relative text-center">
+
+                    <a href="/chi-tiet/@item.MetaTitle-@item.ID"><img src="@item.Image" class="img-fluid" alt="san_pham"> </a>
+                    <span class=" position-absolute  badge translate-middle  bg-danger" style="top:19px; right: -10px;">-@item.Sale%</span>
+                    <p class="fs-5 product-name multi-line">@item.Name</p>
+
+
+                    <span class="text-dark me-4 ">@(priceSale.HasValue ? priceSale.Value.ToString("N0") :"")</span>
+                    <span class="text-bg-danger">
+                        <del>@((item.Price.HasValue ? item.Price.Value.ToString("N0") : ""))</del>
+                    </span>
+
+
+                </div>
+
+                }
+
+
+
+
+            </div>
+
+
+            <!-- Sách  bán chạy-->
+            <!--Title product-->
+            <div class="product-title border-bottom">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <h3 class="text-center mt-5">SÁCH BÁN  CHẠY</h3>
+
+                    </div>
+                </div>
+
+            </div>
+            <!--Product list sách mới-->
+
+            <div class="row slick-productTopHot">
+
+                @foreach (var item in listProductTopHot)
+                {
+                    var priceSale = item.Price - (item.Price * item.Sale / 100);
+                <div class="col-md-12 product-item my-3 position-relative text-center">
+
+                    <a href="/chi-tiet/@item.MetaTitle-@item.ID"><img src="@item.Image" class="img-fluid" alt="san_pham"> </a>
+                    <span class=" position-absolute  badge translate-middle  bg-danger" style="top:19px; right: -10px;">-@item.Sale%</span>
+                    <p class="fs-5 product-name multi-line">@item.Name</p>
+
+
+                    <span class="text-dark me-4 ">@(priceSale.HasValue ? priceSale.Value.ToString("N0") :"")</span>
+                    <span class="text-bg-danger">
+                        <del>@((item.Price.HasValue ? item.Price.Value.ToString("N0") : ""))</del>
+                    </span>
+
+
+                </div>
+
+                }
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+    </div>
+}
+

@@ -1,0 +1,41 @@
+﻿@model List<Web_Sach.Models.Tin_Tuc>
+@{
+    ViewBag.Title = "Tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row justify-content-between">
+
+    @foreach (var item in Model)
+    {
+
+        <div class="col-md-4">
+
+            <a href="/tin-tuc/@item.MetaTitle-@item.ID"><img src="@item.Image" class="img-fluid" alt="san_pham"> </a>
+
+            <p class="fs-5 new-para">@item.Description</p>
+
+
+
+
+
+
+        </div>
+
+    }
+
+
+
+
+    </div>
+
+
+<style>
+    .new-para {
+        white-space: nowrap; /* Ngăn ngừng dòng */
+        overflow: hidden; /* Ẩn phần vượt quá kích thước của phần tử cha */
+        text-overflow: ellipsis; /* Thêm dấu "..." khi dòng vượt quá */
+    }
+</style>

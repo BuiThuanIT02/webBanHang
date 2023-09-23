@@ -1,0 +1,202 @@
+﻿@model List<Web_Sach.Models.Sach>
+@{
+    ViewBag.Title = "Danh mục sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var category = (List<Web_Sach.Models.DanhMucSP>)ViewBag.Category;
+    var curentCategory = (Web_Sach.Models.DanhMucSP)ViewBag.curentCategory;
+    var link_Sort = "/san-pham/" + curentCategory.MetaTitle + "-" + curentCategory.ID;
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!--danh mục-->
+        <div class="col-md-3 p-0 border">
+            <h3 class="border-bottom p-3 " style="background-color: #ACFADF;">DANH MỤC SẢN PHẨM</h3>
+            <ul class="nav flex-column">
+                @foreach (var item in category)
+                {
+                    <li class="nav-item border border-dark"><a href="/san-pham/@item.MetaTitle-@item.ID" class="nav-link  text-dark">@item.Name</a></li>
+
+                }
+
+
+
+            </ul>
+
+        </div>
+
+
+        <!--chi tiết -->
+        <div class="col-md-9">
+            <!--Hàng một-->
+            <div class="row">
+                <div class="col-md-8 border">
+                    <h3>@curentCategory.Name</h3>
+
+                </div>
+                <div class="col-md-4 border ">
+
+                    <select name="sort_by" class="bg-body-secondary" id="select_Sort" onchange="window.location=this.options[this.selectedIndex].value">
+
+
+                        <option value="">
+                            Tùy chọn
+                        </option>
+                        <option value="@link_Sort/?sort_by=tang">
+                            Giá tăng dần
+                        </option>
+                        <option value="@link_Sort/?sort_by=giam">
+                            Giá giảm dần
+                        </option>
+                        <option value="@link_Sort/?sort_by=moinhat">
+                            Mới nhất
+                        </option>
+
+                    </select>
+
+
+
+
+
+
+                </div>
+
+
+            </div>
+            <!--Hàng 2-->
+
+            @if (Model.Count > 0)
+            {
+                <div class="row ms-5" id="product-category">
+
+
+                    @foreach (var item in Model)
+                    {
+                        var priceSale = item.Price - (item.Price * item.Sale / 100);
+                        <div class="col-md-3 my-3 product-item p-0 m-4 position-relative ">
+
+                            <a href="/chi-tiet/@item.MetaTitle-@item.ID"><img src="@item.Image" class="img-thumbnail  " alt="san_pham"> </a>
+                            <span class=" position-absolute  badge translate-middle  bg-danger" style="top:19px; right: 0px;">-@item.Sale%</span>
+                            <p class="fs-5 product-name ">@item.Name</p>
+
+
+                            <span class="text-dark me-4 ">@(priceSale.HasValue ? priceSale.Value.ToString("N0") :"")</span>
+                            <span class="text-bg-danger">
+                                <del>@((item.Price.HasValue ? item.Price.Value.ToString("N0") : ""))</del>
+                            </span>
+
+
+                        </div>
+
+                    }
+                    <!--Phân trang -->
+
+                    @if (ViewBag.totalRecord > ViewBag.PageSize)
+                    { // số bản ghi  > kích thước mỗi trang
+                        var pageMax = (int)ViewBag.maxPage;
+                        var totalPage = (int)ViewBag.totalPage;
+                        var currentPage = (int)ViewBag.page;
+                        var starIndex = (int)Math.Max(1, currentPage - pageMax / 2);
+                        var endIndex = (int)Math.Min(totalPage, currentPage + pageMax / 2);
+
+
+                        var link = "/san-pham/" + curentCategory.MetaTitle + "-" + curentCategory.ID;
+                        <nav>
+                            <ul class="pagination justify-content-end mt-2 ">
+                                <!--Nếu trang hiện tại > 1 thì xuất hiện << -->
+                                @if (currentPage > ViewBag.First)
+                                {
+                                    <li class="page-item"><a href="@link?page=@ViewBag.Prev&sort_by=@ViewBag.sortBy" class="previous page-link" title="Trang trước"> <span aria-hidden="true">&laquo;</span>  </a></li>
+                                }
+
+
+
+                                @for (int i = starIndex; i <= endIndex; i++)
+                                {
+                                    if (currentPage == i)
+                                    {
+                                        <li class="page-item"><a href="@link?page=@i&sort_by=@ViewBag.sortBy" class="page-link active">@i</a></li>
+
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a href="@link?page=@i&sort_by=@ViewBag.sortBy" class="page-link pos">@i</a></li>
+
+                                    }
+
+
+                                }
+
+
+                                @if (currentPage < totalPage)
+                                {
+                                    <li class="page-item"><a href="@link?page=@ViewBag.Next&sort_by=@ViewBag.sortBy" class="page-link next"> <span aria-hidden="true">&raquo;</span>    </a></li>
+
+                                }
+
+
+                            </ul>
+
+
+                        </nav>
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+            }
+            else
+            {
+                <span>Không có bản ghi nào</span>
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
